@@ -6,8 +6,9 @@
   },
   "scripts": {
     "build": "tsc",
-    "bootstrap": "cdk bootstrap",
-    "deploy": "cdk deploy",
+    "cdk:bootstrap": "cdk bootstrap",
+    "cdk:synth": "cdk synth",
+    "cdk:deploy": "cdk deploy",
     "cdk": "cdk"
   },
   "devDependencies": {
