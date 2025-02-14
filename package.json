@@ -1,0 +1,10 @@
+{
+  "name": "btc",
+  "version": "1.0.0",
+  "description": "A simple and interactive web app where players guess whether the Bitcoin price will go up or down based on real-time data.",
+  "author": "Ramón García",
+  "license": "UNLICENSED",
+  "workspaces": [
+    "apps/*"
+  ]
+}

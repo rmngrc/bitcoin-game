@@ -1,0 +1,32 @@
+# Build output
+dist/
+build/
+
+# Vite cache
+.vite/
+
+# Logs
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+
+# IDE files
+.idea/
+
+# Temporary data
+data/
+
+# Environment variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# MacOS files
+.DS_Store
+
+# Miscellaneous
+logs/
+*.log
+*.lock
