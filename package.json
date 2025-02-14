@@ -6,5 +6,11 @@
   "license": "UNLICENSED",
   "workspaces": [
     "apps/*"
-  ]
+  ],
+  "scripts": {
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^3.5.1"
+  }
 }
