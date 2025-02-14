@@ -1,20 +1,10 @@
 #!/usr/bin/env node
-import * as cdk from 'aws-cdk-lib';
-import { InfraStack } from '../lib/infra-stack';
+import * as cdk from "aws-cdk-lib";
+import { BitcoinGameInfraStack } from "../lib/infra-stack";
+import { STAGE_PROD_US_EAST_1 } from "./stages";
 
 const app = new cdk.App();
-new InfraStack(app, 'InfraStack', {
-  /* If you don't specify 'env', this stack will be environment-agnostic.
-   * Account/Region-dependent features and context lookups will not work,
-   * but a single synthesized template can be deployed anywhere. */
 
-  /* Uncomment the next line to specialize this stack for the AWS Account
-   * and Region that are implied by the current CLI configuration. */
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
-
-  /* Uncomment the next line if you know exactly what Account and Region you
-   * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
-
-  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
-});
+// We could add here more stages here if applicable.
+// To deploy a given stage we just need to pass the stack name to cdk deploy.
+new BitcoinGameInfraStack(app, "BTCInfraStack-Dev-UsEast1", STAGE_PROD_US_EAST_1);
