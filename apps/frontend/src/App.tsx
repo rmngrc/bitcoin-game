@@ -4,4 +4,4 @@ export const App = () => {
       <h1>Bitcoin Game</h1>
     </div>
   );
-}
+};
