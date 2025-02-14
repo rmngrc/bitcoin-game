@@ -1,0 +1,23 @@
+{
+  // Recommended VSCode extensions for this project:
+  "recommendations": [
+    // Auto-rename paired HTML/XML tags
+    "formulahendry.auto-rename-tag",
+    // Syntax highlighting and editor integration for .editorconfig
+    "editorconfig.editorconfig",
+    // Display the CODEOWNER for the current file
+    "hcoban.codeowners",
+    // Editor integration for ESLint
+    "dbaeumer.vscode-eslint",
+    // Editor integration for Prettier
+    "esbenp.prettier-vscode",
+    // IntelliSense for Tailwind CSS
+    "bradlc.vscode-tailwindcss",
+    // Editor integration for Markdownlint
+    "davidanson.vscode-markdownlint",
+    // Highlight TODOs in your code
+    "fabiospampinato.vscode-highlight",
+    // Find TODOs in the file tree
+    "gruntfuggly.todo-tree"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "js/ts.implicitProjectConfig.target": "ES2022",
+  "js/ts.implicitProjectConfig.module": "ESNext",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit",
+    "source.sortMembers": "explicit"
+  }
+}
