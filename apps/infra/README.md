@@ -1,14 +1,9 @@
-# Welcome to your CDK TypeScript project
+# Bitcoin Game Infra
 
-This is a blank project for CDK development with TypeScript.
+This is just a regular AWS CDK project, written in Typescript.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## Deploying the infrastructure
 
-## Useful commands
-
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `npx cdk deploy`  deploy this stack to your default AWS account/region
-* `npx cdk diff`    compare deployed stack with current state
-* `npx cdk synth`   emits the synthesized CloudFormation template
+To deploy the infrastructure you just need to push to master branch. The secrets have already been
+set (although this is not a good practice, it's good enough for a personal project) as action
+environment variables. A github action will pick it up and carry out the deployment automatically.
