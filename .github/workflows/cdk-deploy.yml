@@ -27,6 +27,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Synth CDK stack
-        run: cdk synth
+        run: cdk synth --app
       - name: Deploy CDK stack
         run: cdk deploy --require-approval never
