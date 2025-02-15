@@ -31,5 +31,5 @@ Resources:
         AllowHeaders:
           - "*"
         AllowOrigins:
-          - "*"
+          - "*" # TODO: Change this
         AllowCredentials: true
