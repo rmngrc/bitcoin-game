@@ -11,3 +11,8 @@ export type Price = {
   currency: string;
   symbol: string;
 };
+
+export enum Guess {
+  Up = "up",
+  Down = "down",
+}
