@@ -9,6 +9,9 @@
 - The website is served as a Single Page Application hosted in AWS S3 and served through cloudfront.
 - The infra for this is maintained with `AWS CDK`. At the moment I do not have any domain for the
   project, but the hosted zone and certificate could be added easily to the stack.
+- We have to beware that Cloudfront is a global cache for assets. If we want to see the last
+  deployed changes immediately in the browser, we will have to create a new invalidation in
+  Cloudfront (using `/*` as path).
 
 ### Backend
 

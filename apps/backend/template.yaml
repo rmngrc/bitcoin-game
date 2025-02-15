@@ -66,6 +66,9 @@ Resources:
             ApiId: !Ref ProjectHttpApi
             Path: /start
             Method: GET
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref GameStateTable
     Metadata:
       BuildMethod: esbuild
       BuildProperties:
