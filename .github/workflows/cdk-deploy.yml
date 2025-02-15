@@ -60,5 +60,7 @@ jobs:
         run: sam build --base-dir .
         working-directory: apps/backend
       - name: Deploy SAM
-        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+        run:
+          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset \
+            --stack-name bitcoin-game-backend
         working-directory: apps/backend
