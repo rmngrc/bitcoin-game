@@ -61,5 +61,5 @@ jobs:
         working-directory: apps/backend
       - name: Deploy SAM
         run:
-          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name bitcoin-game-backend --resolve-s3
+          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name bitcoin-game-backend --resolve-s3 --capabilities CAPABILITY_IAM
         working-directory: apps/backend
