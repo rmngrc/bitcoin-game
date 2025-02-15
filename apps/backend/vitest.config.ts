@@ -9,6 +9,9 @@ export default defineConfig({
     },
     environment: "node",
     onConsoleLog(log) {
+      if (log.match(/ParseError/)) {
+        return false;
+      }
       return true;
     },
     reporters: ["verbose"],
