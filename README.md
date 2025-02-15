@@ -36,6 +36,17 @@ and the game rules could be bypassed easily with very little technical knowledge
 should go through implementing websockets in the backend to get real time updates from the server
 and send messages to the backend from the frontend.
 
+## Game Deployment
+
+The deployment for the infra, backend and frontend have been done through a Github action. You can
+see the implementation at [./github/workflows/deploy.yml](./github/workflows/deploy.yml).
+
+If you want to do that in your own infrastructure, you will need to set up credentials for it in
+secrets.
+
+To know more about deployment details, go to the README.md file of each of the apps (links at the
+end of the file).
+
 ## Decisions on Game Logic and Limitations
 
 Based on the requirements I ended up making some decision in order to improve the user experience:
