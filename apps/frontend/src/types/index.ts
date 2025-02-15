@@ -16,3 +16,10 @@ export enum Guess {
   Up = "up",
   Down = "down",
 }
+
+export type LastGuess = {
+  initialPrice: Price;
+  finalPrice?: Price;
+  guess: Guess;
+  variance?: number;
+};

@@ -2,6 +2,7 @@ import { PriceDisplay } from "@/components/PriceDisplay";
 import { useGetBitcoinPrice } from "@/hooks/useGetBitcoinPrice";
 import { Guess } from "@/types";
 import { GuessControls } from "./GuessControls";
+import { LastGuessDisplay } from "./LastGuessDisplay";
 import { ScoreBoard } from "./ScoreBoard";
 
 interface GameProps {
@@ -20,6 +21,7 @@ export const Game = ({ initialScore = 0 }: GameProps) => {
         disabled={true}
         onGuess={async (guess: Guess) => console.log(guess)}
       />
+      <LastGuessDisplay lastGuess={null} />
     </div>
   );
 };
