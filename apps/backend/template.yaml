@@ -75,6 +75,38 @@ Resources:
         OutExtension:
           - ".js=.js"
 
+  ScoreFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Calculate the score after a guess
+      CodeUri: ./
+      Handler: index.handler
+      Environment:
+        Variables:
+          STAGE: !Ref Stage
+          DYNAMODB_TABLE: !Sub "game-state-${Stage}"
+          DYNAMODB_ENDPOINT: !If [IsLocal, "http://dynamodb-local:8000", !Ref "AWS::NoValue"]
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ProjectHttpApi
+            Path: /score
+            Method: POST
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref GameStateTable
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - src/functions/score/index.ts
+        OutExtension:
+          - ".js=.js"
+
   PriceFunction:
     Type: AWS::Serverless::Function
     Properties:
