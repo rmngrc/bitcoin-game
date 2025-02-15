@@ -44,7 +44,10 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Install SAM
-        run: npm install -g aws-sam-cli
+        uses: aws-actions/setup-sam@v2
+        with:
+          use-installer: true
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
