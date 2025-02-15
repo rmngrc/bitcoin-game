@@ -6,6 +6,17 @@ export type PriceResponse = {
   price: string;
 };
 
+export type ScoreRequest = {
+  previousPrice: number;
+  newPrice: number;
+  guess: Guess;
+};
+
+export type ScoreResponse = {
+  score: number;
+  variance: number;
+};
+
 export type Price = {
   amount: number;
   currency: string;
