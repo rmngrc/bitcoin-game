@@ -33,3 +33,15 @@ Resources:
         AllowOrigins:
           - "*" # TODO: Change this
         AllowCredentials: true
+
+  GameStateTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub "game-state-${Stage}"
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: sessionId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: sessionId
+          KeyType: HASH
