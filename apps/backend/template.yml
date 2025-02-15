@@ -31,7 +31,7 @@ Resources:
         AllowHeaders:
           - "*"
         AllowOrigins:
-          - "*" # TODO: Change this
+          - "https://random-cloudfront.com" # TODO: Change this
         AllowCredentials: true
 
   GameStateTable:
