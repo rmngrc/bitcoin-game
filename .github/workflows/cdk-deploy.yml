@@ -61,7 +61,5 @@ jobs:
         working-directory: apps/backend
       - name: Deploy SAM
         run:
-          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset \
-           --parameter-overrides Stage=prod CryptoCompareApiKey=${{ secrets.CRYPTO_COMPARE_API_KEY }} \
-           --stack-name bitcoin-game-backend --resolve-s3 --capabilities CAPABILITY_IAM
+          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --parameter-overrides Stage=prod CryptoCompareApiKey=${{ secrets.CRYPTO_COMPARE_API_KEY }} --stack-name bitcoin-game-backend --resolve-s3 --capabilities CAPABILITY_IAM
         working-directory: apps/backend
