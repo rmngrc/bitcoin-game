@@ -22,8 +22,6 @@ export const useGameLogic = ({ initialScore = 0 }) => {
     canGuess: true,
   });
 
-  useEffect(() => {}, [currentPrice]);
-
   useEffect(() => {
     if (isLoadingBTCPrice || currentPrice === undefined) {
       return; // Wait until the price is loaded
@@ -112,6 +110,5 @@ const handleGuessResult = async ({
     canGuess: true,
     lastGuess: { ...lastGuess, finalPrice, variance },
     score,
-    variance,
   }));
 };
