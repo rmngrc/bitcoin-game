@@ -15,28 +15,29 @@ describe("useGameLogic", () => {
   const mockPrice = { amount: 5000000, currency: "USD", symbol: "$" };
   const mockGetNewScore = vi.fn().mockResolvedValue({ score: 100, variance: 1 });
 
+  (useGetBitcoinPrice as Mock).mockReturnValue({
+    data: mockPrice,
+    isLoading: false,
+  });
+  (useGetNewScore as Mock).mockReturnValue(mockGetNewScore);
+  (useCountdown as Mock).mockReturnValue({
+    countdown: -1,
+    resetCountdown: vi.fn(),
+    startCountdown: vi.fn(),
+  });
+
   beforeEach(() => {
     vi.clearAllMocks();
-    (useGetBitcoinPrice as Mock).mockReturnValue({
-      data: mockPrice,
-      isLoading: false,
-    });
-    (useGetNewScore as Mock).mockReturnValue(mockGetNewScore);
-    (useCountdown as Mock).mockReturnValue({
-      countdown: -1,
-      resetCountdown: vi.fn(),
-      startCountdown: vi.fn(),
-    });
   });
 
   it("initializes with the correct state", () => {
-    const { result } = renderHook(() => useGameLogic({ initialScore: 0 }));
+    const { result } = renderHook(() => useGameLogic({ initialScore: 10 }));
 
     expect(result.current).toEqual({
       countdown: -1,
       currentPrice: mockPrice,
       gameState: {
-        score: 0,
+        score: 10,
         lastGuess: null,
         canGuess: true,
       },
@@ -68,7 +69,7 @@ describe("useGameLogic", () => {
     });
   });
 
-  it.only("updates state correctly when countdown reaches zero", async () => {
+  it("updates state correctly when countdown reaches zero", async () => {
     setCountdownTo(-1);
 
     const { result, rerender } = renderHook(() => useGameLogic({ initialScore: 0 }));
