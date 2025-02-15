@@ -45,3 +45,30 @@ Resources:
       KeySchema:
         - AttributeName: sessionId
           KeyType: HASH
+
+  StartFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Start a new game session
+      CodeUri: ./
+      Handler: index.handler
+      Environment:
+        Variables:
+          STAGE: !Ref Stage
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ProjectHttpApi
+            Path: /start
+            Method: GET
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true
+        EntryPoints:
+          - src/functions/start/index.ts
+        OutExtension:
+          - ".js=.js"
