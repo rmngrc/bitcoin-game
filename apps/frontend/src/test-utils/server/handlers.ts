@@ -1,8 +1,9 @@
+import { Guess, ScoreRequest } from "@/types";
 import { http, HttpResponse } from "msw";
 import { v4 as uuidv4 } from "uuid";
 
 // In memory store. It will be reset every time the server is restarted.
-const score = 0;
+let score = 0;
 
 export const handlers = [
   http.get(`${import.meta.env.VITE_API_URL}/price`, async () => {
@@ -26,8 +27,20 @@ export const handlers = [
 
     return HttpResponse.json({ score }, { status: 200 });
   }),
-  http.post(`${import.meta.env.VITE_API_URL}/score`, () => {
-    throw new Error("Not implemented");
+
+  http.post(`${import.meta.env.VITE_API_URL}/score`, async ({ request }) => {
+    const { previousPrice, newPrice, guess } = (await request.json()) as ScoreRequest;
+
+    let variance = 0;
+
+    if (previousPrice < newPrice) {
+      variance = guess === Guess.Up ? 1 : -1;
+    } else if (previousPrice > newPrice) {
+      variance = guess === Guess.Down ? 1 : -1;
+    }
+
+    score += variance;
+    return HttpResponse.json({ score, variance });
   }),
 ];
 
