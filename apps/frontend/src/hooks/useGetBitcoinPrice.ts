@@ -1,4 +1,4 @@
-import { PriceResponse, Price } from "@/types";
+import { Price, PriceResponse } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetBitcoinPrice = () => {
@@ -25,6 +25,6 @@ function adaptPriceResponse(data: PriceResponse): Price {
   return {
     amount: Math.trunc(parseFloat(data.price) * 100),
     currency: "USD",
-    symbol: "BTC",
+    symbol: "$",
   };
 }
