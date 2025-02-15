@@ -3,6 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
+    "build": "sam build --base-dir .",
+    "deploy": "sam deploy --parameter-overrides Stage=prod",
     "test": "vitest"
   },
   "dependencies": {
