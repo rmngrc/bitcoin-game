@@ -33,7 +33,7 @@ Resources:
         AllowHeaders:
           - "*"
         AllowOrigins:
-          - "https://random-cloudfront.com" # TODO: Change this
+          - "https://d6tztee3rvnpz.cloudfront.net"
         AllowCredentials: true
 
   GameStateTable:
