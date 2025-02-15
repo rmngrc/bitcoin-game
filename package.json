@@ -8,7 +8,9 @@
     "apps/*"
   ],
   "scripts": {
-    "format": "prettier --write ."
+    "dev": "npm run dev --workspaces --if-present-only",
+    "format": "prettier --write .",
+    "test": "npm run test --workspaces --if-present-only"
   },
   "devDependencies": {
     "prettier": "^3.5.1"
