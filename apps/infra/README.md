@@ -4,10 +4,6 @@
 
 This is just a regular AWS CDK project, written in Typescript.
 
-## Application's Architecture
-
-TODO
-
 ## Technology Choices
 
 - The stack just contains a construct to deploy a static website.

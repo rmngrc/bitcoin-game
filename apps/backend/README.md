@@ -13,16 +13,14 @@ So, to get started with it I recommend simply running the tests:
 npm run test --workspace=backend
 ```
 
-## Application's Architecture
-
-TODO
-
 ## Technology Choices
 
 - AWS SAM to contain the HTTP API Gateway, DynamoDB and the Lambda Functions.
 - Usually since I follow TDD for lambdas I simply use CDK to develop them and deploy them. Using CDK
   I feel I have more control over the resources than with SAM. However for this project I ended up
   using SAM because it can be run locally if we need.
+- The lambda functions use `Middy`. This is a nice way to keep your lambda handlers small and
+  focused, and just write middlewares for common logic.
 - Although I didn't focus on getting the project running locally it can be done in a few easy steps:
 
 ```txt

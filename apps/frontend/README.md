@@ -9,15 +9,13 @@ project. This will bring up the development server for you:
 npm run dev --workspace=frontend
 ```
 
-## Application's Architecture
-
-TODO
-
 ## Technology Choices
 
 - TDD as development approach.
-- React Query as data-fetching library.
+- React Query as data-fetching library which allows for retries and polling in a very idiomatic way.
 - Tailwind to style the UI.
+- Most of the components have been kept presentational, and all the game logic has been moved to
+  hooks (business logic belongs there).
 
 ## Deploying the Project
 
