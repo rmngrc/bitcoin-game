@@ -9,31 +9,29 @@ interface GuessControlsProps {
 
 export const GuessControls = ({ countdown, disabled, onGuess }: GuessControlsProps) => {
   return (
-    <div className="flex flex-col gap-4">
-      {countdown > 0 && <p>Guessing is disabled now. Remaining time: {countdown}...</p>}
-      {countdown === 0 && <p>What do you think will happen with the price in the next minute?</p>}
+    <div className="flex flex-col space-x-4 gap-10">
       <div className="flex w-full gap-4">
         <button
           onClick={() => onGuess(Guess.Up)}
           disabled={disabled}
           className={twMerge(
-            "px-4 py-2 rounded disabled:opacity-50 border-0.5 bg-[#4CAF50] hover:opacity-90 w-1/2 text-white",
-            disabled ? "cursor-not-allowed" : "cursor-pointer",
+            "flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-xl shadow-md transition cursor-pointer disabled:cursor-not-allowed disabled:opacity-80",
           )}
         >
-          I think it'll go up 👍
+          It will go up ⬆
         </button>
         <button
           onClick={() => onGuess(Guess.Down)}
           disabled={disabled}
-          className={twMerge(
-            "px-4 py-2 rounded disabled:opacity-50 border-0.5 bg-[#F44336] hover:opacity-90 w-1/2 text-white",
-            disabled ? "cursor-not-allowed" : "cursor-pointer",
-          )}
+          className={
+            "flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-xl shadow-md transition cursor-pointer disabled:cursor-not-allowed disabled:opacity-80"
+          }
         >
-          I think it'll go down 👎
+          It will go down ⬇
         </button>
       </div>
+      {countdown > 0 && <p>Guessing is disabled now. Remaining time: {countdown}...</p>}
+      {countdown === 0 && <p>What do you think will happen with the price in the next minute?</p>}
     </div>
   );
 };

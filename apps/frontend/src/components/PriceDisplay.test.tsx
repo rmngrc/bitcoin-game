@@ -11,7 +11,7 @@ describe("PriceDisplay", () => {
     expect(screen.getByText("Loading Bitcoin price...")).toBeInTheDocument();
   });
 
-  it("does not render the price if ref is null", () => {
+  it("does not render if price not provided", () => {
     const price = undefined;
 
     render(<PriceDisplay price={price} isLoading={false} />);
@@ -24,6 +24,6 @@ describe("PriceDisplay", () => {
 
     render(<PriceDisplay price={price} isLoading={false} />);
 
-    expect(screen.getByText("The current Bitcoin Price is US$95,123.44")).toBeInTheDocument();
+    expect(screen.getByText("US$95,123.44")).toBeInTheDocument();
   });
 });

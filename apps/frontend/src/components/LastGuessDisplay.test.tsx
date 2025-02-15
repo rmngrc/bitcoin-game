@@ -17,10 +17,9 @@ describe("LastGuessDisplay", () => {
 
     render(<LastGuessDisplay lastGuess={lastGuess} />);
 
-    expect(
-      screen.getByText("Your last guess was up with BTC price of US$45,000.00"),
-    ).toBeInTheDocument();
-    expect(screen.queryByText(/Guess was resolved at price/)).toBeNull();
+    expect(screen.getByText("⬆ Up")).toBeInTheDocument();
+    expect(screen.getByText("US$45,000.00")).toBeInTheDocument();
+    expect(screen.queryByTestId("final-price")).not.toBeInTheDocument();
   });
 
   describe("when guess is resolved", () => {
@@ -34,10 +33,10 @@ describe("LastGuessDisplay", () => {
 
       render(<LastGuessDisplay lastGuess={lastGuess} />);
 
-      expect(
-        screen.getByText("Your last guess was up with BTC price of US$45,000.00"),
-      ).toBeInTheDocument();
-      expect(screen.getByText("Guess was resolved at price: US$47,000.00")).toBeInTheDocument();
+      expect(screen.getByText("⬆ Up")).toBeInTheDocument();
+      expect(screen.getByText("US$45,000.00")).toBeInTheDocument();
+      expect(screen.getByText("US$47,000.00")).toBeInTheDocument();
+      expect(screen.getByTestId("result-correct")).toBeInTheDocument();
     });
 
     it("renders variance correctly", () => {
@@ -50,7 +49,9 @@ describe("LastGuessDisplay", () => {
 
       render(<LastGuessDisplay lastGuess={lastGuess} />);
 
-      expect(screen.getByText("Correct! +1 points!")).toBeInTheDocument();
+      expect(screen.getByTestId("result-correct")).toBeInTheDocument();
+      expect(screen.queryByTestId("result-equal")).not.toBeInTheDocument();
+      expect(screen.queryByTestId("result-wrong")).not.toBeInTheDocument();
     });
 
     it("renders negative variance correctly", () => {
@@ -63,7 +64,9 @@ describe("LastGuessDisplay", () => {
 
       render(<LastGuessDisplay lastGuess={lastGuess} />);
 
-      expect(screen.getByText("Wrong! -1 points!")).toBeInTheDocument();
+      expect(screen.queryByTestId("result-correct")).not.toBeInTheDocument();
+      expect(screen.queryByTestId("result-equal")).not.toBeInTheDocument();
+      expect(screen.getByTestId("result-wrong")).toBeInTheDocument();
     });
 
     it("renders zero variance correctly", () => {
@@ -76,7 +79,9 @@ describe("LastGuessDisplay", () => {
 
       render(<LastGuessDisplay lastGuess={lastGuess} />);
 
-      expect(screen.getByText("Equal! 0 points!")).toBeInTheDocument();
+      expect(screen.queryByTestId("result-correct")).not.toBeInTheDocument();
+      expect(screen.getByTestId("result-equal")).toBeInTheDocument();
+      expect(screen.queryByTestId("result-wrong")).not.toBeInTheDocument();
     });
   });
 });

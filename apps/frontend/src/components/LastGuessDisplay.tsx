@@ -11,28 +11,47 @@ export const LastGuessDisplay = ({ lastGuess }: LastGuessDisplayProps) => {
   }
 
   return (
-    <div className="flex flex-col gap-2 items-center">
-      <div>
-        Your last guess was {lastGuess.guess} with BTC price of{" "}
-        {formatPrice(lastGuess.initialPrice.amount, lastGuess.initialPrice.currency)}
+    <div className="p-4 bg-gray-100 rounded-xl shadow-md text-gray-900 text-sm">
+      <h3 className="text-lg font-semibold mb-2">Previous Guess</h3>
+
+      <div className="flex items-center space-x-2">
+        <span className="text-gray-600">Your Guess:</span>
+        <strong className={lastGuess.guess === "up" ? "text-green-500" : "text-red-500"}>
+          {lastGuess.guess === "up" ? "⬆ Up" : "⬇ Down"}
+        </strong>
       </div>
+
+      <div className="flex items-center space-x-2">
+        <span className="text-gray-600">BTC Price at Guess:</span>
+        <strong>
+          {formatPrice(lastGuess.initialPrice.amount, lastGuess.initialPrice.currency)}
+        </strong>
+      </div>
+
       {lastGuess.finalPrice && (
-        <div>
-          Guess was resolved at price:{" "}
-          {formatPrice(lastGuess.finalPrice.amount, lastGuess.finalPrice.currency)}
+        <div className="flex items-center space-x-2" data-testid="final-price">
+          <span className="text-gray-600">Resolved Price:</span>
+          <strong>{formatPrice(lastGuess.finalPrice.amount, lastGuess.finalPrice.currency)}</strong>
         </div>
       )}
+
       {lastGuess.variance !== undefined && (
-        <div>
-          Last guess was:{" "}
+        <div className="mt-3 flex items-center space-x-2">
+          <span className="text-gray-600">Result:</span>
           {lastGuess.variance > 0 && (
-            <span className="text-green-600">Correct! +{lastGuess.variance} points!</span>
-          )}
-          {lastGuess.variance < 0 && (
-            <span className="text-red-600">Wrong! {lastGuess.variance} points!</span>
+            <span className="text-green-600 font-semibold" data-testid="result-correct">
+              ✅ Correct! +{lastGuess.variance} points! 🥳
+            </span>
           )}
           {lastGuess.variance === 0 && (
-            <span className="text-gray-600">Equal! {lastGuess.variance} points!</span>
+            <span className="text-gray-600 font-semibold" data-testid="result-equal">
+              ⚖ Equal! {lastGuess.variance} points! 😭
+            </span>
+          )}
+          {lastGuess.variance < 0 && (
+            <span className="text-red-600 font-semibold" data-testid="result-wrong">
+              ❌ Wrong! {lastGuess.variance} points! 😐
+            </span>
           )}
         </div>
       )}

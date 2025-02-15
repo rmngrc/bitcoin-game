@@ -14,7 +14,7 @@ export const Game = ({ initialScore = 0 }: GameProps) => {
   });
 
   return (
-    <div className="flex flex-col gap-8 items-center justify-center my-8">
+    <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md text-center flex flex-col gap-6">
       <PriceDisplay price={currentPrice} isLoading={isLoadingBTCPrice} />
       <ScoreBoard score={gameState.score} />
       <GuessControls countdown={countdown} disabled={!gameState.canGuess} onGuess={handleOnGuess} />

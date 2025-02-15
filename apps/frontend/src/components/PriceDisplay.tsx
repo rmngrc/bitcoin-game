@@ -13,9 +13,10 @@ export const PriceDisplay = ({ price, isLoading }: PriceDisplayProps) => {
 
   if (price) {
     return (
-      <div className="text-2xl font-bold">
-        The current Bitcoin Price is {formatPrice(price.amount, price.currency)}
-      </div>
+      <h1 className="text-2xl font-bold text-gray-900">
+        The current Bitcoin Price is{" "}
+        <span className="text-blue-600">{formatPrice(price.amount, price.currency)}</span>
+      </h1>
     );
   }
 

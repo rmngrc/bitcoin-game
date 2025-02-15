@@ -9,7 +9,7 @@ import { Game } from "./Game";
 const PRICE_URL = `${import.meta.env.VITE_API_URL}/price`;
 
 describe("Game", () => {
-  it("renders loading spinner on btc price", async () => {
+  it("renders loading spinner on bitcoin price", async () => {
     server.use(
       http.get(PRICE_URL, () => {
         const response: PriceResponse = {
@@ -25,7 +25,7 @@ describe("Game", () => {
     expect(await screen.findByText("Loading Bitcoin price...")).toBeInTheDocument();
   });
 
-  it("renders btc price", async () => {
+  it("renders bitcoin price", async () => {
     server.use(
       http.get(PRICE_URL, () => {
         const response: PriceResponse = {
@@ -38,9 +38,7 @@ describe("Game", () => {
 
     renderWithProviders(<Game initialScore={0} />);
 
-    expect(
-      await screen.findByText("The current Bitcoin Price is US$94,567.89"),
-    ).toBeInTheDocument();
+    expect(await screen.findByText("US$94,567.89")).toBeInTheDocument();
   });
 
   describe("when there is no previous guess", () => {
@@ -58,9 +56,7 @@ describe("Game", () => {
       renderWithProviders(<Game initialScore={0} />);
 
       expect(await screen.findByText("Your Score: 0")).toBeInTheDocument();
-      expect(
-        await screen.findByText("The current Bitcoin Price is US$94,567.89"),
-      ).toBeInTheDocument();
+      expect(await screen.findByText("US$94,567.89")).toBeInTheDocument();
       expect(await screen.findByRole("button", { name: /up/i })).toBeEnabled();
       expect(await screen.findByRole("button", { name: /down/i })).toBeEnabled();
     });

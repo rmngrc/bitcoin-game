@@ -3,9 +3,5 @@ interface ScoreBoardProps {
 }
 
 export const ScoreBoard = ({ score }: ScoreBoardProps) => {
-  return (
-    <div className="mb-4">
-      <div className="text-xl">Your Score: {score}</div>
-    </div>
-  );
+  return <p className="text-lg text-gray-700 font-medium">Your Score: {score}</p>;
 };

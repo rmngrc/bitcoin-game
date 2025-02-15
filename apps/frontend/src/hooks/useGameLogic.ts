@@ -1,9 +1,9 @@
-import { useGetBitcoinPrice } from "@/hooks/useGetBitcoinPrice";
-import { useGetNewScore } from "@/hooks/useGetNewScore";
 import { Guess, LastGuess, Price, ScoreResponse } from "@/types";
 import { UseMutateAsyncFunction } from "@tanstack/react-query";
 import { useCallback, useEffect, useState } from "react";
 import { useCountdown } from "./useCountdown";
+import { useGetBitcoinPrice } from "./useGetBitcoinPrice";
+import { useGetNewScore } from "./useGetNewScore";
 
 interface GameState {
   canGuess: boolean;
