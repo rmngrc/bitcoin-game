@@ -2,12 +2,12 @@ import { Guess } from "@/types";
 import { twMerge } from "tailwind-merge";
 
 interface GuessControlsProps {
-  onGuess: (guess: Guess) => Promise<void>;
-  disabled: boolean;
   countdown: number;
+  disabled: boolean;
+  onGuess: (guess: Guess) => Promise<void>;
 }
 
-export const GuessControls = ({ onGuess, disabled, countdown }: GuessControlsProps) => {
+export const GuessControls = ({ countdown, disabled, onGuess }: GuessControlsProps) => {
   return (
     <div className="flex flex-col gap-4">
       {countdown > 0 && <p>Guessing is disabled now. Remaining time: {countdown}...</p>}
