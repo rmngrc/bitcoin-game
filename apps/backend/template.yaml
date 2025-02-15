@@ -1,2 +1,35 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Runtime: nodejs22.x
+    Architectures: [x86_64]
+    Timeout: 10
+    Environment:
+      Variables:
+        DYNAMODB_TABLE: !Ref GameStateTable
+        # Use different endpoint for local development
+        DYNAMODB_ENDPOINT: !If [IsLocal, "http://dynamodb-local:8000", ""]
+
+Parameters:
+  Stage:
+    Type: String
+    Default: local
+    AllowedValues: [local, prod]
+
+Conditions:
+  IsLocal: !Equals [!Ref Stage, "local"]
+
+Resources:
+  ProjectHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowMethods:
+          - "*"
+        AllowHeaders:
+          - "*"
+        AllowOrigins:
+          - "*"
+        AllowCredentials: true
