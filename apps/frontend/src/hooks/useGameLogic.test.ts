@@ -13,7 +13,10 @@ vi.mock("./useGetNewScore");
 
 describe("useGameLogic", () => {
   const mockPrice = { amount: 5000000, currency: "USD", symbol: "$" };
-  const mockGetNewScore = vi.fn().mockResolvedValue({ score: 100, variance: 1 });
+  const mockGetNewScore = {
+    isPending: false,
+    mutateAsync: vi.fn().mockResolvedValue({ score: 100, variance: 1 }),
+  };
 
   (useGetBitcoinPrice as Mock).mockReturnValue({
     data: mockPrice,
@@ -94,7 +97,7 @@ describe("useGameLogic", () => {
       expect(result.current.countdown).toBe(0);
     });
 
-    expect(mockGetNewScore).toHaveBeenCalledWith({
+    expect(mockGetNewScore.mutateAsync).toHaveBeenCalledWith({
       previousPrice: mockPrice.amount,
       newPrice: mockPrice.amount,
       guess: "up",

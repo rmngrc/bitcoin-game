@@ -1,3 +1,4 @@
+import { MILISECONDS_BETWEEN_PRICE_UPDATES } from "@/constants";
 import { Price, PriceResponse } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
@@ -17,7 +18,7 @@ export const useGetBitcoinPrice = () => {
       const data: PriceResponse = await response.json();
       return adaptPriceResponse(data);
     },
-    refetchInterval: 5000,
+    refetchInterval: MILISECONDS_BETWEEN_PRICE_UPDATES,
   });
 };
 

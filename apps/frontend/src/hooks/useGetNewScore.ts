@@ -27,5 +27,5 @@ export const useGetNewScore = () => {
 
       return response.json();
     },
-  }).mutateAsync;
+  });
 };

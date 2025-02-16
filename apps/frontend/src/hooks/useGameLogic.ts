@@ -13,44 +13,39 @@ interface GameState {
 export const useGameLogic = ({ initialScore = 0 }) => {
   const { data: currentPrice, isLoading: isLoadingBTCPrice } = useGetBitcoinPrice();
   const { countdown, resetCountdown, startCountdown } = useCountdown();
-  const getNewScore = useGetNewScore();
-
-  const [state, setState] = useState<GameState>({
+  const { isPending: isUpdatingScore, mutateAsync: getNewScore } = useGetNewScore();
+  const [gameState, setGameState] = useState<GameState>({
     score: initialScore,
     lastBet: null,
     canBet: true,
   });
 
   useEffect(() => {
-    const priceNotLoaded = isLoadingBTCPrice || currentPrice === undefined;
-    const canResolveGuess = !state.canBet && countdown === 0 && currentPrice;
+    const canResolveBet = !isUpdatingScore && countdown === 0 && currentPrice;
 
-    if (priceNotLoaded) {
-      // Wait until the price is loaded to resolve the guess.
+    if (!canResolveBet) {
       return;
     }
 
     // Updating the state when we reach the end of the countdown.
     // Calling resetCountdown to avoid getting the function called more than once.
-    if (canResolveGuess) {
-      handleBetResult({ currentPrice, getNewScore, currentState: state }).then((newState) => {
-        setState(newState);
-        resetCountdown();
-      });
-    }
-  }, [countdown, currentPrice, getNewScore, isLoadingBTCPrice, resetCountdown, state]);
+    handleBetResult({ currentPrice, getNewScore, currentState: gameState }).then((newState) => {
+      resetCountdown();
+      setGameState(newState);
+    });
+  }, [countdown, currentPrice, getNewScore, isUpdatingScore, resetCountdown, gameState]);
 
   const handleOnBet = useCallback(
     async (guess: Guess) => {
-      const isAbleToGuess = state.canBet && currentPrice;
+      const isAbleToBet = gameState.canBet && currentPrice;
 
-      if (!isAbleToGuess) {
+      if (!isAbleToBet) {
         return;
       }
 
       startCountdown();
 
-      setState((prevState) => ({
+      setGameState((prevState) => ({
         ...prevState,
         lastBet: {
           initialPrice: currentPrice,
@@ -59,13 +54,13 @@ export const useGameLogic = ({ initialScore = 0 }) => {
         canBet: false,
       }));
     },
-    [currentPrice, startCountdown, state],
+    [currentPrice, startCountdown, gameState],
   );
 
   return {
     currentPrice,
     isLoadingBTCPrice,
-    gameState: state,
+    gameState,
     countdown,
     handleOnBet: handleOnBet,
   };
@@ -74,7 +69,7 @@ export const useGameLogic = ({ initialScore = 0 }) => {
 interface HandleBetResultProps {
   currentPrice: Price;
   currentState: GameState;
-  getNewScore: ReturnType<typeof useGetNewScore>;
+  getNewScore: ReturnType<typeof useGetNewScore>["mutateAsync"];
 }
 
 // Moving this function outside of the component lifecycle so that
@@ -85,12 +80,11 @@ const handleBetResult = async ({
   currentState,
   getNewScore,
 }: HandleBetResultProps) => {
-  // Attention: currentPrice.current cannot be null here as to get
-  // to this point there should have been a previous guess, and the
-  // currentPrice ref only updates when the hook is able to fetch
-  // the actuall value from the API. However, Typescript is not
-  // smart enough to know that.
   const finalPrice: Price = currentPrice;
+
+  // Attention: currentState.lastBet cannot be null here as to get
+  // to this point there should have been a previous bet. However,
+  // Typescript is not smart enough to know that.
   const lastBet = currentState.lastBet!;
 
   const { score, variance } = await getNewScore({
