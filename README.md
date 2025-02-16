@@ -49,7 +49,7 @@ To know more about the frontend implementation please go to [Frontend](./apps/fr
     the new score, update it in the database then return it to the user. I also introduced the
     concept of variance, which indicates to the frontend by how much are we incrementing or
     decrementing the score on each guess resolution, so that the frontend can let the user know what
-    was the different. This is also useful just in case we wanted to add any new business rules in
+    was the difference. This is also useful just in case we wanted to add any new business rules in
     the future around scores.
   - **price**: backend for frontend in charge of fetching the btc price from a third party API
     (cryptocompare).
@@ -62,7 +62,7 @@ and send messages to the backend from the frontend.
 ## Game Deployment
 
 The deployment for the infra, backend and frontend have been done through a Github action. You can
-see the implementation at [./github/workflows/deploy.yml](./github/workflows/deploy.yml).
+see the implementation at [./.github/workflows/deploy.yml](./.github/workflows/deploy.yml).
 
 If you want to do that in your own infrastructure, you will need to set up credentials for it in
 secrets.
