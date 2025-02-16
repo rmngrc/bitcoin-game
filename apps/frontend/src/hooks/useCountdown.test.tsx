@@ -15,7 +15,13 @@ describe("useCountdown", () => {
     vi.useRealTimers();
   });
 
-  it("counts down correctly", async () => {
+  it("initializes countdown correctly", () => {
+    const { result } = renderHook(() => useCountdown());
+
+    expect(result.current.countdown).toBe(-1);
+  });
+
+  it("starts countdown correctly", async () => {
     const secondsToCount = SECONDS_BETWEEN_GUESSES;
     const { result } = renderHook(() => useCountdown());
 
