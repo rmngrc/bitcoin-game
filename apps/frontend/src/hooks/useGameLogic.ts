@@ -5,7 +5,7 @@ import { useGetBitcoinPrice } from "./useGetBitcoinPrice";
 import { useGetNewScore } from "./useGetNewScore";
 
 interface GameState {
-  canBet: boolean;
+  canGuess: boolean;
   score: number;
   lastGuess: LastGuess | null;
 }
@@ -17,7 +17,7 @@ export const useGameLogic = ({ initialScore = 0 }) => {
   const [gameState, setGameState] = useState<GameState>({
     score: initialScore,
     lastGuess: null,
-    canBet: true,
+    canGuess: true,
   });
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export const useGameLogic = ({ initialScore = 0 }) => {
 
   const handleOnBet = useCallback(
     async (guess: Guess) => {
-      const isAbleToBet = gameState.canBet && currentPrice;
+      const isAbleToBet = gameState.canGuess && currentPrice;
 
       if (!isAbleToBet) {
         return;
@@ -51,7 +51,7 @@ export const useGameLogic = ({ initialScore = 0 }) => {
           initialPrice: currentPrice,
           guess,
         },
-        canBet: false,
+        canGuess: false,
       }));
     },
     [currentPrice, startCountdown, gameState],
@@ -95,7 +95,7 @@ const handleBetResult = async ({
 
   return {
     ...currentState,
-    canBet: true,
+    canGuess: true,
     lastGuess: { ...lastGuess, finalPrice, variance },
     score,
   };

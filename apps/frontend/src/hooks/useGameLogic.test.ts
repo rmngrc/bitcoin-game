@@ -42,7 +42,7 @@ describe("useGameLogic", () => {
       gameState: {
         score: 10,
         lastGuess: null,
-        canBet: true,
+        canGuess: true,
       },
       handleOnBet: expect.any(Function),
       isLoadingBTCPrice: false,
@@ -65,7 +65,7 @@ describe("useGameLogic", () => {
       gameState: {
         score: 0,
         lastGuess: { initialPrice: mockPrice, guess: Guess.Up },
-        canBet: false,
+        canGuess: false,
       },
       handleOnBet: expect.any(Function),
       isLoadingBTCPrice: false,
@@ -109,7 +109,7 @@ describe("useGameLogic", () => {
       gameState: {
         score: 100,
         lastGuess: { initialPrice: mockPrice, finalPrice: mockPrice, guess: Guess.Up, variance: 1 },
-        canBet: true,
+        canGuess: true,
       },
       handleOnBet: expect.any(Function),
       isLoadingBTCPrice: false,

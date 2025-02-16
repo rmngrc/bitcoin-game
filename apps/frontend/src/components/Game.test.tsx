@@ -17,7 +17,7 @@ describe("Game", () => {
     gameState: {
       score: 0,
       lastGuess: null,
-      canBet: true,
+      canGuess: true,
     },
     countdown: 10,
   });
@@ -39,7 +39,7 @@ describe("Game", () => {
     expect(mockHandleOnBet).toHaveBeenCalledWith(Guess.Up);
   });
 
-  it("disables guess buttons when canBet is false", () => {
+  it("disables guess buttons when canGuess is false", () => {
     (useGameLogic as Mock).mockReturnValue({
       currentPrice: mockPrice,
       handleOnBet: mockHandleOnBet,
@@ -47,7 +47,7 @@ describe("Game", () => {
       gameState: {
         score: 0,
         lastGuess: null,
-        canBet: false,
+        canGuess: false,
       },
       countdown: 10,
     });
@@ -69,7 +69,7 @@ describe("Game", () => {
           guess: Guess.Up,
           initialPrice: { amount: 4900000, currency: "USD", symbol: "$" },
         },
-        canBet: false,
+        canGuess: false,
       },
       countdown: 10,
     });
@@ -91,7 +91,7 @@ describe("Game", () => {
           guess: Guess.Up,
           initialPrice: { amount: 4900000, currency: "USD", symbol: "$" },
         },
-        canBet: false,
+        canGuess: false,
       },
       countdown: 5,
     });
@@ -114,7 +114,7 @@ describe("Game", () => {
           finalPrice: { amount: 4950000, currency: "USD", symbol: "$" },
           variance: 1,
         },
-        canBet: false,
+        canGuess: false,
       },
       countdown: 0,
     });
