@@ -1,4 +1,4 @@
-import { SECONDS_BETWEEN_GUESSES } from "@/lib/utils";
+import { SECONDS_BETWEEN_GUESSES } from "@/constants";
 import { act, renderHook } from "@testing-library/react";
 import { useCountdown } from "./useCountdown";
 

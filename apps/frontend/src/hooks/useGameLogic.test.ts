@@ -1,4 +1,4 @@
-import { SECONDS_BETWEEN_GUESSES } from "@/lib/utils";
+import { SECONDS_BETWEEN_GUESSES } from "@/constants";
 import { Guess } from "@/types";
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { Mock, vi } from "vitest";

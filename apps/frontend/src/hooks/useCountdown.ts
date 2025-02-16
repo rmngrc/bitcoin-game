@@ -1,4 +1,4 @@
-import { SECONDS_BETWEEN_GUESSES } from "@/lib/utils";
+import { SECONDS_BETWEEN_GUESSES } from "@/constants";
 import { useCallback, useEffect, useState } from "react";
 
 export const useCountdown = () => {
