@@ -1,4 +1,4 @@
-import { Guess, LastBet, Price } from "@/types";
+import { Guess, LastGuess, Price } from "@/types";
 import { useCallback, useEffect, useState } from "react";
 import { useCountdown } from "./useCountdown";
 import { useGetBitcoinPrice } from "./useGetBitcoinPrice";
@@ -7,7 +7,7 @@ import { useGetNewScore } from "./useGetNewScore";
 interface GameState {
   canBet: boolean;
   score: number;
-  lastBet: LastBet | null;
+  lastGuess: LastGuess | null;
 }
 
 export const useGameLogic = ({ initialScore = 0 }) => {
@@ -16,7 +16,7 @@ export const useGameLogic = ({ initialScore = 0 }) => {
   const { isPending: isUpdatingScore, mutateAsync: getNewScore } = useGetNewScore();
   const [gameState, setGameState] = useState<GameState>({
     score: initialScore,
-    lastBet: null,
+    lastGuess: null,
     canBet: true,
   });
 
@@ -47,7 +47,7 @@ export const useGameLogic = ({ initialScore = 0 }) => {
 
       setGameState((prevState) => ({
         ...prevState,
-        lastBet: {
+        lastGuess: {
           initialPrice: currentPrice,
           guess,
         },
@@ -82,21 +82,21 @@ const handleBetResult = async ({
 }: HandleBetResultProps) => {
   const finalPrice: Price = currentPrice;
 
-  // Attention: currentState.lastBet cannot be null here as to get
+  // Attention: currentState.lastGuess cannot be null here as to get
   // to this point there should have been a previous bet. However,
   // Typescript is not smart enough to know that.
-  const lastBet = currentState.lastBet!;
+  const lastGuess = currentState.lastGuess!;
 
   const { score, variance } = await getNewScore({
-    previousPrice: lastBet.initialPrice.amount,
+    previousPrice: lastGuess.initialPrice.amount,
     newPrice: finalPrice.amount,
-    guess: lastBet.guess,
+    guess: lastGuess.guess,
   });
 
   return {
     ...currentState,
     canBet: true,
-    lastBet: { ...lastBet, finalPrice, variance },
+    lastGuess: { ...lastGuess, finalPrice, variance },
     score,
   };
 };

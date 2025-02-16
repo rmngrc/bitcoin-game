@@ -16,7 +16,7 @@ describe("Game", () => {
     isLoadingBTCPrice: false,
     gameState: {
       score: 0,
-      lastBet: null,
+      lastGuess: null,
       canBet: true,
     },
     countdown: 10,
@@ -46,7 +46,7 @@ describe("Game", () => {
       isLoadingBTCPrice: false,
       gameState: {
         score: 0,
-        lastBet: null,
+        lastGuess: null,
         canBet: false,
       },
       countdown: 10,
@@ -65,7 +65,7 @@ describe("Game", () => {
       isLoadingBTCPrice: false,
       gameState: {
         score: 0,
-        lastBet: {
+        lastGuess: {
           guess: Guess.Up,
           initialPrice: { amount: 4900000, currency: "USD", symbol: "$" },
         },
@@ -87,7 +87,7 @@ describe("Game", () => {
       isLoadingBTCPrice: false,
       gameState: {
         score: 0,
-        lastBet: {
+        lastGuess: {
           guess: Guess.Up,
           initialPrice: { amount: 4900000, currency: "USD", symbol: "$" },
         },
@@ -108,7 +108,7 @@ describe("Game", () => {
       isLoadingBTCPrice: false,
       gameState: {
         score: 0,
-        lastBet: {
+        lastGuess: {
           guess: Guess.Up,
           initialPrice: { amount: 4900000, currency: "USD", symbol: "$" },
           finalPrice: { amount: 4950000, currency: "USD", symbol: "$" },

@@ -41,7 +41,7 @@ describe("useGameLogic", () => {
       currentPrice: mockPrice,
       gameState: {
         score: 10,
-        lastBet: null,
+        lastGuess: null,
         canBet: true,
       },
       handleOnBet: expect.any(Function),
@@ -64,7 +64,7 @@ describe("useGameLogic", () => {
       currentPrice: mockPrice,
       gameState: {
         score: 0,
-        lastBet: { initialPrice: mockPrice, guess: Guess.Up },
+        lastGuess: { initialPrice: mockPrice, guess: Guess.Up },
         canBet: false,
       },
       handleOnBet: expect.any(Function),
@@ -108,7 +108,7 @@ describe("useGameLogic", () => {
       currentPrice: mockPrice,
       gameState: {
         score: 100,
-        lastBet: { initialPrice: mockPrice, finalPrice: mockPrice, guess: Guess.Up, variance: 1 },
+        lastGuess: { initialPrice: mockPrice, finalPrice: mockPrice, guess: Guess.Up, variance: 1 },
         canBet: true,
       },
       handleOnBet: expect.any(Function),

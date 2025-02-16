@@ -18,7 +18,7 @@ export const Game = ({ initialScore = 0 }: GameProps) => {
       <PriceDisplay price={currentPrice} isLoading={isLoadingBTCPrice} />
       <ScoreBoard score={gameState.score} />
       <GuessControls countdown={countdown} disabled={!gameState.canBet} onGuess={handleOnBet} />
-      <LastBetDisplay lastBet={gameState.lastBet} />
+      <LastBetDisplay lastGuess={gameState.lastGuess} />
     </div>
   );
 };
