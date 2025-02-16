@@ -1,11 +1,11 @@
 import { formatPrice } from "@/lib/utils";
 import { Guess, LastGuess } from "@/types";
 
-interface LastBetDisplayProps {
+interface LastGuessDisplayProps {
   lastGuess: LastGuess | null;
 }
 
-export const LastBetDisplay = ({ lastGuess }: LastBetDisplayProps) => {
+export const LastGuessDisplay = ({ lastGuess }: LastGuessDisplayProps) => {
   if (!lastGuess) {
     return null;
   }

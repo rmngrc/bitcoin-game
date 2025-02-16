@@ -1,10 +1,10 @@
 import { Guess, LastGuess } from "@/types";
 import { render, screen } from "@testing-library/react";
-import { LastBetDisplay } from "./LastBetDisplay";
+import { LastGuessDisplay } from "./LastGuessDisplay";
 
-describe("LastBetDisplay", () => {
+describe("LastGuessDisplay", () => {
   it("renders nothing when lastGuess is null", () => {
-    render(<LastBetDisplay lastGuess={null} />);
+    render(<LastGuessDisplay lastGuess={null} />);
 
     expect(screen.queryByText(/Your last guess was/)).toBeNull();
   });
@@ -15,7 +15,7 @@ describe("LastBetDisplay", () => {
       initialPrice: { amount: 4500000, currency: "USD", symbol: "$" },
     };
 
-    render(<LastBetDisplay lastGuess={lastGuess} />);
+    render(<LastGuessDisplay lastGuess={lastGuess} />);
 
     expect(screen.getByText("⬆ Up")).toBeInTheDocument();
     expect(screen.getByText("US$45,000.00")).toBeInTheDocument();
@@ -31,7 +31,7 @@ describe("LastBetDisplay", () => {
         variance: 1,
       };
 
-      render(<LastBetDisplay lastGuess={lastGuess} />);
+      render(<LastGuessDisplay lastGuess={lastGuess} />);
 
       expect(screen.getByText("⬆ Up")).toBeInTheDocument();
       expect(screen.getByText("US$45,000.00")).toBeInTheDocument();
@@ -47,7 +47,7 @@ describe("LastBetDisplay", () => {
         variance: 1,
       };
 
-      render(<LastBetDisplay lastGuess={lastGuess} />);
+      render(<LastGuessDisplay lastGuess={lastGuess} />);
 
       expect(screen.getByTestId("result-correct")).toBeInTheDocument();
       expect(screen.queryByTestId("result-equal")).not.toBeInTheDocument();
@@ -62,7 +62,7 @@ describe("LastBetDisplay", () => {
         variance: -1,
       };
 
-      render(<LastBetDisplay lastGuess={lastGuess} />);
+      render(<LastGuessDisplay lastGuess={lastGuess} />);
 
       expect(screen.queryByTestId("result-correct")).not.toBeInTheDocument();
       expect(screen.queryByTestId("result-equal")).not.toBeInTheDocument();
@@ -77,7 +77,7 @@ describe("LastBetDisplay", () => {
         variance: 0,
       };
 
-      render(<LastBetDisplay lastGuess={lastGuess} />);
+      render(<LastGuessDisplay lastGuess={lastGuess} />);
 
       expect(screen.queryByTestId("result-correct")).not.toBeInTheDocument();
       expect(screen.getByTestId("result-equal")).toBeInTheDocument();

@@ -8,11 +8,11 @@ vi.mock("@/hooks/useGameLogic");
 
 describe("Game", () => {
   const mockPrice = { amount: 5000000, currency: "USD", symbol: "$" };
-  const mockHandleOnBet = vi.fn();
+  const mockHandleOnGuess = vi.fn();
 
   (useGameLogic as Mock).mockReturnValue({
     currentPrice: mockPrice,
-    handleOnBet: mockHandleOnBet,
+    handleOnGuess: mockHandleOnGuess,
     isLoadingBTCPrice: false,
     gameState: {
       score: 0,
@@ -31,18 +31,18 @@ describe("Game", () => {
     expect(screen.getByRole("button", { name: /down/i })).toBeEnabled();
   });
 
-  it("calls handleOnBet when a guess is made", () => {
+  it("calls handleOnGuess when a guess is made", () => {
     render(<Game initialScore={0} />);
 
     fireEvent.click(screen.getByRole("button", { name: /up/i }));
 
-    expect(mockHandleOnBet).toHaveBeenCalledWith(Guess.Up);
+    expect(mockHandleOnGuess).toHaveBeenCalledWith(Guess.Up);
   });
 
   it("disables guess buttons when canGuess is false", () => {
     (useGameLogic as Mock).mockReturnValue({
       currentPrice: mockPrice,
-      handleOnBet: mockHandleOnBet,
+      handleOnGuess: mockHandleOnGuess,
       isLoadingBTCPrice: false,
       gameState: {
         score: 0,
@@ -61,7 +61,7 @@ describe("Game", () => {
   it("displays the last guess", () => {
     (useGameLogic as Mock).mockReturnValue({
       currentPrice: mockPrice,
-      handleOnBet: mockHandleOnBet,
+      handleOnGuess: mockHandleOnGuess,
       isLoadingBTCPrice: false,
       gameState: {
         score: 0,
@@ -83,7 +83,7 @@ describe("Game", () => {
   it("displays the countdown", () => {
     (useGameLogic as Mock).mockReturnValue({
       currentPrice: mockPrice,
-      handleOnBet: mockHandleOnBet,
+      handleOnGuess: mockHandleOnGuess,
       isLoadingBTCPrice: false,
       gameState: {
         score: 0,
@@ -101,10 +101,10 @@ describe("Game", () => {
     expect(screen.getByText("Guessing is disabled now. Remaining time: 5...")).toBeInTheDocument();
   });
 
-  it("displays the bet's final result", () => {
+  it("displays the guess's final result", () => {
     (useGameLogic as Mock).mockReturnValue({
       currentPrice: mockPrice,
-      handleOnBet: mockHandleOnBet,
+      handleOnGuess: mockHandleOnGuess,
       isLoadingBTCPrice: false,
       gameState: {
         score: 0,

@@ -21,25 +21,25 @@ export const useGameLogic = ({ initialScore = 0 }) => {
   });
 
   useEffect(() => {
-    const canResolveBet = !isUpdatingScore && countdown === 0 && currentPrice;
+    const canResolveGuess = !isUpdatingScore && countdown === 0 && currentPrice;
 
-    if (!canResolveBet) {
+    if (!canResolveGuess) {
       return;
     }
 
     // Updating the state when we reach the end of the countdown.
     // Calling resetCountdown to avoid getting the function called more than once.
-    handleBetResult({ currentPrice, getNewScore, currentState: gameState }).then((newState) => {
+    handleGuessResult({ currentPrice, getNewScore, currentState: gameState }).then((newState) => {
       resetCountdown();
       setGameState(newState);
     });
   }, [countdown, currentPrice, getNewScore, isUpdatingScore, resetCountdown, gameState]);
 
-  const handleOnBet = useCallback(
+  const handleOnGuess = useCallback(
     async (guess: Guess) => {
-      const isAbleToBet = gameState.canGuess && currentPrice;
+      const isAbleToGuess = gameState.canGuess && currentPrice;
 
-      if (!isAbleToBet) {
+      if (!isAbleToGuess) {
         return;
       }
 
@@ -58,15 +58,15 @@ export const useGameLogic = ({ initialScore = 0 }) => {
   );
 
   return {
-    currentPrice,
-    isLoadingBTCPrice,
-    gameState,
     countdown,
-    handleOnBet: handleOnBet,
+    currentPrice,
+    gameState,
+    handleOnGuess,
+    isLoadingBTCPrice,
   };
 };
 
-interface HandleBetResultProps {
+interface HandleGuessResultProps {
   currentPrice: Price;
   currentState: GameState;
   getNewScore: ReturnType<typeof useGetNewScore>["mutateAsync"];
@@ -75,15 +75,15 @@ interface HandleBetResultProps {
 // Moving this function outside of the component lifecycle so that
 // we are not affecting the performance of the component. By doing this,
 // the function does not need to mutate if any of the props change.
-const handleBetResult = async ({
+const handleGuessResult = async ({
   currentPrice,
   currentState,
   getNewScore,
-}: HandleBetResultProps) => {
+}: HandleGuessResultProps) => {
   const finalPrice: Price = currentPrice;
 
   // Attention: currentState.lastGuess cannot be null here as to get
-  // to this point there should have been a previous bet. However,
+  // to this point there should have been a previous guess. However,
   // Typescript is not smart enough to know that.
   const lastGuess = currentState.lastGuess!;
 
