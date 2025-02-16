@@ -23,7 +23,7 @@ export const useGameLogic = ({ initialScore = 0 }) => {
 
   useEffect(() => {
     const priceNotLoaded = isLoadingBTCPrice || currentPrice === undefined;
-    const canResolveGuess = countdown === 0 && currentPrice;
+    const canResolveGuess = !state.canBet && countdown === 0 && currentPrice;
 
     if (priceNotLoaded) {
       // Wait until the price is loaded to resolve the guess.
