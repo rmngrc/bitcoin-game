@@ -28,9 +28,14 @@ export enum Guess {
   Down = "down",
 }
 
-export type LastGuess = {
+export type LastBet = {
   initialPrice: Price;
   finalPrice?: Price;
   guess: Guess;
   variance?: number;
+};
+
+export type ResolvedLastBet = LastBet & {
+  finalPrice: Price;
+  variance: number;
 };

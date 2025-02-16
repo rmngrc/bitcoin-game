@@ -1,14 +1,13 @@
-import { Guess, LastGuess, Price, ScoreResponse } from "@/types";
-import { UseMutateAsyncFunction } from "@tanstack/react-query";
+import { Guess, LastBet, Price } from "@/types";
 import { useCallback, useEffect, useState } from "react";
 import { useCountdown } from "./useCountdown";
 import { useGetBitcoinPrice } from "./useGetBitcoinPrice";
 import { useGetNewScore } from "./useGetNewScore";
 
 interface GameState {
-  canGuess: boolean;
+  canBet: boolean;
   score: number;
-  lastGuess: LastGuess | null;
+  lastBet: LastBet | null;
 }
 
 export const useGameLogic = ({ initialScore = 0 }) => {
@@ -18,40 +17,46 @@ export const useGameLogic = ({ initialScore = 0 }) => {
 
   const [state, setState] = useState<GameState>({
     score: initialScore,
-    lastGuess: null,
-    canGuess: true,
+    lastBet: null,
+    canBet: true,
   });
 
   useEffect(() => {
-    if (isLoadingBTCPrice || currentPrice === undefined) {
-      return; // Wait until the price is loaded
+    const priceNotLoaded = isLoadingBTCPrice || currentPrice === undefined;
+    const canResolveGuess = countdown === 0 && currentPrice;
+
+    if (priceNotLoaded) {
+      // Wait until the price is loaded to resolve the guess.
+      return;
     }
 
     // Updating the state when we reach the end of the countdown.
     // Calling resetCountdown to avoid getting the function called more than once.
-    if (countdown === 0 && currentPrice) {
-      handleGuessResult({ currentPrice, getNewScore, state, setState });
-      resetCountdown();
+    if (canResolveGuess) {
+      handleBetResult({ currentPrice, getNewScore, currentState: state }).then((newState) => {
+        setState(newState);
+        resetCountdown();
+      });
     }
   }, [countdown, currentPrice, getNewScore, isLoadingBTCPrice, resetCountdown, state]);
 
-  const handleOnGuess = useCallback(
+  const handleOnBet = useCallback(
     async (guess: Guess) => {
-      if (!state.canGuess || !currentPrice) {
+      const isAbleToGuess = state.canBet && currentPrice;
+
+      if (!isAbleToGuess) {
         return;
       }
-
-      const lastGuess: LastGuess = {
-        initialPrice: currentPrice,
-        guess,
-      };
 
       startCountdown();
 
       setState((prevState) => ({
         ...prevState,
-        lastGuess,
-        canGuess: false,
+        lastBet: {
+          initialPrice: currentPrice,
+          guess,
+        },
+        canBet: false,
       }));
     },
     [currentPrice, startCountdown, state],
@@ -62,53 +67,42 @@ export const useGameLogic = ({ initialScore = 0 }) => {
     isLoadingBTCPrice,
     gameState: state,
     countdown,
-    handleOnGuess,
+    handleOnBet: handleOnBet,
   };
 };
 
-interface HandleGuessResultProps {
+interface HandleBetResultProps {
   currentPrice: Price;
-  getNewScore: UseMutateAsyncFunction<
-    ScoreResponse,
-    Error,
-    {
-      previousPrice: number;
-      newPrice: number;
-      guess: Guess;
-    },
-    unknown
-  >;
-  state: GameState;
-  setState: React.Dispatch<React.SetStateAction<GameState>>;
+  currentState: GameState;
+  getNewScore: ReturnType<typeof useGetNewScore>;
 }
 
 // Moving this function outside of the component lifecycle so that
 // we are not affecting the performance of the component. By doing this,
 // the function does not need to mutate if any of the props change.
-const handleGuessResult = async ({
+const handleBetResult = async ({
   currentPrice,
+  currentState,
   getNewScore,
-  state,
-  setState,
-}: HandleGuessResultProps) => {
+}: HandleBetResultProps) => {
   // Attention: currentPrice.current cannot be null here as to get
   // to this point there should have been a previous guess, and the
   // currentPrice ref only updates when the hook is able to fetch
   // the actuall value from the API. However, Typescript is not
   // smart enough to know that.
   const finalPrice: Price = currentPrice;
-  const lastGuess = state.lastGuess!;
+  const lastBet = currentState.lastBet!;
 
   const { score, variance } = await getNewScore({
-    previousPrice: lastGuess.initialPrice.amount,
+    previousPrice: lastBet.initialPrice.amount,
     newPrice: finalPrice.amount,
-    guess: lastGuess.guess,
+    guess: lastBet.guess,
   });
 
-  setState((prevState) => ({
-    ...prevState,
-    canGuess: true,
-    lastGuess: { ...lastGuess, finalPrice, variance },
+  return {
+    ...currentState,
+    canBet: true,
+    lastBet: { ...lastBet, finalPrice, variance },
     score,
-  }));
+  };
 };

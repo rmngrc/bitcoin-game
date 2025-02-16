@@ -38,10 +38,10 @@ describe("useGameLogic", () => {
       currentPrice: mockPrice,
       gameState: {
         score: 10,
-        lastGuess: null,
-        canGuess: true,
+        lastBet: null,
+        canBet: true,
       },
-      handleOnGuess: expect.any(Function),
+      handleOnBet: expect.any(Function),
       isLoadingBTCPrice: false,
     });
   });
@@ -52,7 +52,7 @@ describe("useGameLogic", () => {
     const { result } = renderHook(() => useGameLogic({ initialScore: 0 }));
 
     await act(async () => {
-      await result.current.handleOnGuess(Guess.Up);
+      await result.current.handleOnBet(Guess.Up);
     });
 
     expect(useCountdown().startCountdown).toHaveBeenCalled();
@@ -61,10 +61,10 @@ describe("useGameLogic", () => {
       currentPrice: mockPrice,
       gameState: {
         score: 0,
-        lastGuess: { initialPrice: mockPrice, guess: Guess.Up },
-        canGuess: false,
+        lastBet: { initialPrice: mockPrice, guess: Guess.Up },
+        canBet: false,
       },
-      handleOnGuess: expect.any(Function),
+      handleOnBet: expect.any(Function),
       isLoadingBTCPrice: false,
     });
   });
@@ -75,7 +75,7 @@ describe("useGameLogic", () => {
     const { result, rerender } = renderHook(() => useGameLogic({ initialScore: 0 }));
 
     await act(async () => {
-      await result.current.handleOnGuess(Guess.Up);
+      await result.current.handleOnBet(Guess.Up);
     });
 
     setCountdownTo(SECONDS_BETWEEN_GUESSES);
@@ -105,10 +105,10 @@ describe("useGameLogic", () => {
       currentPrice: mockPrice,
       gameState: {
         score: 100,
-        lastGuess: { initialPrice: mockPrice, finalPrice: mockPrice, guess: Guess.Up, variance: 1 },
-        canGuess: true,
+        lastBet: { initialPrice: mockPrice, finalPrice: mockPrice, guess: Guess.Up, variance: 1 },
+        canBet: true,
       },
-      handleOnGuess: expect.any(Function),
+      handleOnBet: expect.any(Function),
       isLoadingBTCPrice: false,
     });
 

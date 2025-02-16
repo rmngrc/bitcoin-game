@@ -2,6 +2,7 @@ import { ReturnValue } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, QueryCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { mockClient } from "aws-sdk-client-mock";
+import { Guess } from "../../shared/types";
 import { handler } from "./score";
 
 describe("Score Session Handler", () => {
@@ -12,7 +13,7 @@ describe("Score Session Handler", () => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ previousPrice: 100, newPrice: 200, guess: "up" }),
+    body: JSON.stringify({ previousPrice: 100, newPrice: 200, guess: Guess.Up }),
   } as unknown as APIGatewayProxyEvent;
 
   beforeEach(() => {
@@ -78,7 +79,7 @@ describe("Score Session Handler", () => {
     const response = await handler(
       {
         ...a_valid_request,
-        body: JSON.stringify({ previousPrice: 100, newPrice: 200, guess: "down" }),
+        body: JSON.stringify({ previousPrice: 100, newPrice: 200, guess: Guess.Down }),
       } as never,
       {} as AWSLambda.Context,
     );
@@ -116,7 +117,7 @@ describe("Score Session Handler", () => {
     const response = await handler(
       {
         ...a_valid_request,
-        body: JSON.stringify({ previousPrice: 100, newPrice: 100, guess: "down" }),
+        body: JSON.stringify({ previousPrice: 100, newPrice: 100, guess: Guess.Down }),
       } as never,
       {} as AWSLambda.Context,
     );

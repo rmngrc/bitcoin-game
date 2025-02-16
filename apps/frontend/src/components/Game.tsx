@@ -1,7 +1,7 @@
 import { PriceDisplay } from "@/components/PriceDisplay";
 import { useGameLogic } from "@/hooks/useGameLogic";
 import { GuessControls } from "./GuessControls";
-import { LastGuessDisplay } from "./LastGuessDisplay";
+import { LastBetDisplay } from "./LastBetDisplay";
 import { ScoreBoard } from "./ScoreBoard";
 
 interface GameProps {
@@ -9,7 +9,7 @@ interface GameProps {
 }
 
 export const Game = ({ initialScore = 0 }: GameProps) => {
-  const { currentPrice, handleOnGuess, isLoadingBTCPrice, gameState, countdown } = useGameLogic({
+  const { currentPrice, handleOnBet, isLoadingBTCPrice, gameState, countdown } = useGameLogic({
     initialScore,
   });
 
@@ -17,8 +17,8 @@ export const Game = ({ initialScore = 0 }: GameProps) => {
     <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md text-center flex flex-col gap-6">
       <PriceDisplay price={currentPrice} isLoading={isLoadingBTCPrice} />
       <ScoreBoard score={gameState.score} />
-      <GuessControls countdown={countdown} disabled={!gameState.canGuess} onGuess={handleOnGuess} />
-      <LastGuessDisplay lastGuess={gameState.lastGuess} />
+      <GuessControls countdown={countdown} disabled={!gameState.canBet} onGuess={handleOnBet} />
+      <LastBetDisplay lastBet={gameState.lastBet} />
     </div>
   );
 };

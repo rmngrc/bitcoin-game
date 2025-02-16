@@ -1,21 +1,21 @@
-import { Guess, LastGuess } from "@/types";
+import { Guess, LastBet } from "@/types";
 import { render, screen } from "@testing-library/react";
-import { LastGuessDisplay } from "./LastGuessDisplay";
+import { LastBetDisplay } from "./LastBetDisplay";
 
-describe("LastGuessDisplay", () => {
-  it("renders nothing when lastGuess is null", () => {
-    render(<LastGuessDisplay lastGuess={null} />);
+describe("LastBetDisplay", () => {
+  it("renders nothing when lastBet is null", () => {
+    render(<LastBetDisplay lastBet={null} />);
 
     expect(screen.queryByText(/Your last guess was/)).toBeNull();
   });
 
   it("renders last guess and initial price only", () => {
-    const lastGuess: LastGuess = {
+    const lastBet: LastBet = {
       guess: Guess.Up,
       initialPrice: { amount: 4500000, currency: "USD", symbol: "$" },
     };
 
-    render(<LastGuessDisplay lastGuess={lastGuess} />);
+    render(<LastBetDisplay lastBet={lastBet} />);
 
     expect(screen.getByText("⬆ Up")).toBeInTheDocument();
     expect(screen.getByText("US$45,000.00")).toBeInTheDocument();
@@ -24,14 +24,14 @@ describe("LastGuessDisplay", () => {
 
   describe("when guess is resolved", () => {
     it("renders last guess and initial and final price if available", () => {
-      const lastGuess: LastGuess = {
+      const lastBet: LastBet = {
         guess: Guess.Up,
         initialPrice: { amount: 4500000, currency: "USD", symbol: "$" },
         finalPrice: { amount: 4700000, currency: "USD", symbol: "$" },
         variance: 1,
       };
 
-      render(<LastGuessDisplay lastGuess={lastGuess} />);
+      render(<LastBetDisplay lastBet={lastBet} />);
 
       expect(screen.getByText("⬆ Up")).toBeInTheDocument();
       expect(screen.getByText("US$45,000.00")).toBeInTheDocument();
@@ -40,14 +40,14 @@ describe("LastGuessDisplay", () => {
     });
 
     it("renders variance correctly", () => {
-      const lastGuess: LastGuess = {
+      const lastBet: LastBet = {
         guess: Guess.Up,
         initialPrice: { amount: 4500000, currency: "USD", symbol: "$" },
         finalPrice: { amount: 4700000, currency: "USD", symbol: "$" },
         variance: 1,
       };
 
-      render(<LastGuessDisplay lastGuess={lastGuess} />);
+      render(<LastBetDisplay lastBet={lastBet} />);
 
       expect(screen.getByTestId("result-correct")).toBeInTheDocument();
       expect(screen.queryByTestId("result-equal")).not.toBeInTheDocument();
@@ -55,14 +55,14 @@ describe("LastGuessDisplay", () => {
     });
 
     it("renders negative variance correctly", () => {
-      const lastGuess: LastGuess = {
+      const lastBet: LastBet = {
         guess: Guess.Up,
         initialPrice: { amount: 4500000, currency: "USD", symbol: "$" },
         finalPrice: { amount: 4300000, currency: "USD", symbol: "$" },
         variance: -1,
       };
 
-      render(<LastGuessDisplay lastGuess={lastGuess} />);
+      render(<LastBetDisplay lastBet={lastBet} />);
 
       expect(screen.queryByTestId("result-correct")).not.toBeInTheDocument();
       expect(screen.queryByTestId("result-equal")).not.toBeInTheDocument();
@@ -70,14 +70,14 @@ describe("LastGuessDisplay", () => {
     });
 
     it("renders zero variance correctly", () => {
-      const lastGuess: LastGuess = {
+      const lastBet: LastBet = {
         guess: Guess.Up,
         initialPrice: { amount: 4500000, currency: "USD", symbol: "$" },
         finalPrice: { amount: 4500000, currency: "USD", symbol: "$" },
         variance: 0,
       };
 
-      render(<LastGuessDisplay lastGuess={lastGuess} />);
+      render(<LastBetDisplay lastBet={lastBet} />);
 
       expect(screen.queryByTestId("result-correct")).not.toBeInTheDocument();
       expect(screen.getByTestId("result-equal")).toBeInTheDocument();
