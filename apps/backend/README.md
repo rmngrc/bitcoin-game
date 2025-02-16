@@ -62,11 +62,28 @@ async function createTable() {
 createTable();
 ----
 
-3) Add these scripts to the package.json:
+3) Create a docker-compose.yml file with the following content:
+
+version: "3.8"
+
+services:
+  dynamodb-local:
+    image: amazon/dynamodb-local:latest
+    container_name: dynamodb-local
+    command: ["-jar", "DynamoDBLocal.jar", "-sharedDb"]
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/home/dynamodblocal/data
+
+4) Add these scripts to the package.json:
 
     "predev": "docker compose up -d && npm run build && tsx scripts/setup-local-dynamodb.ts",
     "dev": "sam local start-api --warm-containers EAGER --parameter-overrides Stage=local --docker-network btc-backend --profile personal",
 ```
+
+Finally, run `npm run dev --workspace=backend` while in the root folder or `npm run dev` if within
+the `app/backend` folder.
 
 ## Deploying the Project
 

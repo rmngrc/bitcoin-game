@@ -25,6 +25,17 @@
   deployed changes immediately in the browser, we will have to create a new invalidation in
   Cloudfront (using `/*` as path).
 
+To run the frontend locally you just need to do:
+
+```sh
+npm run dev --workspace=frontend
+```
+
+The frontend application hits the API Gateway's public DNS, however there is a mock service worker
+(msw) being attached to the application that intercepts the calls and returns its own responses.
+
+To know more about the frontend implementation please go to [Frontend](./apps/frontend/README.md).
+
 ### Backend
 
 - The backend part is developed and deployed using `AWS SAM`.
